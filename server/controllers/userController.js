@@ -131,6 +131,33 @@ class UserController {
     }
   }
 
+
+  async deleteUser(req, res, next) {
+    // '/delete'
+
+    try {
+      const id = req.params.id;
+
+      if (id) {
+        const candidate = await User.destroy({
+          where: {
+            id: id,
+          },
+        });
+
+        if (candidate) {
+          return res.json(`User with id ${id} was deleted`);
+        } else {
+          return res.json(`User with id ${id} not found`);
+        }
+      }
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+    
+  }
+
+
   async howManyU(req, res, next) {
     // '/dashboard  //admin only
 
