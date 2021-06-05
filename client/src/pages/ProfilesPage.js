@@ -5,7 +5,7 @@ import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
 
-export const ProfilesPage = () => {
+export const ProfilesPage = ({userIdAmin}) => {
   const auth = useContext(AuthContext);
   const message = useMessage();
   const { loading, request, error, clearError } = useContext(HttpContext);

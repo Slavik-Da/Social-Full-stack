@@ -12,7 +12,7 @@ export const ProfilesList = ({ profiles }) => {
     return (
       <p>
         You have not profiles, you can go to
-        <NavLink to="/"> user page</NavLink>
+        <NavLink to="/"> Create page</NavLink>
       </p>
     );
   }

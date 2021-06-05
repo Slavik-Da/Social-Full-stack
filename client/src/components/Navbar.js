@@ -29,7 +29,7 @@ export const Navbar = () => {
             </li>
           )}
           <li>
-            <NavLink to="/">To user page</NavLink>
+            <NavLink to="/">Create new profile</NavLink>
           </li>
           <li>
             <NavLink to="/profiles">To profiles page</NavLink>

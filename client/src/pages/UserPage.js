@@ -51,6 +51,7 @@ export const UserPage = () => {
   return (
     <div className="row">
       <div className="col s8 offset-s2">
+        <h1>Create new profile </h1>
         <div className="input-field">
           <input
             placeholder="Enter full name"
