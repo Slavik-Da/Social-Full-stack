@@ -8,6 +8,7 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit }) => {
   const [user, setUser] = useState({
     email: "",
     password: "",
+    role: "",
   });
 
   const message = useMessage();
@@ -69,7 +70,8 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit }) => {
   return (
     <div>
       <div className="input-field">
-        <p>User id: {userIdToEdit}</p>
+        <h6>User id: {userIdToEdit}</h6>
+        <br/>
       </div>
 
       <div className="input-field">
@@ -94,6 +96,17 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit }) => {
         />
         <label htmlFor="password">Password</label>
       </div>
+      <p onChange={changeHandler}>
+                  <label>
+                    <input type="radio" name="role" value="USER" />
+                    <span>User role</span>
+                  </label>
+                  <br />
+                  <label>
+                    <input type="radio" name="role" value="ADMIN" />
+                    <span>Admin role</span>
+                  </label>
+                </p>
 
       <div className="card-action">
         <button className="btn green darken-1" onClick={refreshHandler}>

@@ -28,6 +28,7 @@ export const UsersList = ({ users }) => {
               <tr>
                 <th>User id</th>
                 <th>Email</th>
+                <th>User role</th>
                 <th>Edit</th>
                 <th>Go to profiles</th>
               </tr>
@@ -39,6 +40,7 @@ export const UsersList = ({ users }) => {
                   <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.email}</td>
+                    <td>{user.role}</td>
                     <td>
                       <button
                         className="btn blue darken-2"
@@ -47,6 +49,7 @@ export const UsersList = ({ users }) => {
                           setUserIdToEdit(user.id);
                           setUserToEdit({
                             email: user.email,
+                            role: user.role
                           });
                         }}
                       >
