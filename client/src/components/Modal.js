@@ -1,8 +1,9 @@
-import React, { Children } from "react";
+import React from "react";
 
 import "./Modal.css";
 
 export const Modal = ({ active, setActive, children }) => {
+
   return (
     <div
       className={active ? "modalW active" : "modalW"}

@@ -5,7 +5,7 @@ import { ModalUserEdit } from "./ModalUserEdit.js";
 
 export const ProfilesList = ({ profiles }) => {
   const [modalActive, setModalActive] = useState(false);
-  const [userIdtoEdit, setUserIdtoEdit] = useState(null)
+  const [profileIdtoEdit, setProfileIdtoEdit] = useState(null)
   const [profileToEdit, setProfileToEdit]= useState({});
 
   if (!profiles.length) {
@@ -22,7 +22,7 @@ export const ProfilesList = ({ profiles }) => {
     return (
       <>
       <Modal active={modalActive} setActive={setModalActive}>
-        <ModalUserEdit profileToEdit={profileToEdit} userIdtoEdit={userIdtoEdit}/>
+        <ModalUserEdit profileToEdit={profileToEdit} profileIdtoEdit={profileIdtoEdit}/>
       </Modal>
       <div>
         <table>
@@ -48,7 +48,7 @@ export const ProfilesList = ({ profiles }) => {
                   <td>{profile.city}</td>
                   <td><button className="btn blue darken-2" onClick={()=>{
                     setModalActive(true)
-                    setUserIdtoEdit(profile.id)
+                    setProfileIdtoEdit(profile.id)
                     setProfileToEdit({
                       name:profile.name,
                       gender: profile.gender,

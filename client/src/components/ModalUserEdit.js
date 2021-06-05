@@ -4,7 +4,7 @@ import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
 
-export const ModalUserEdit = ({ profileToEdit, userIdtoEdit }) => {
+export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit }) => {
   const [profile, setProfile] = useState({
     name: "",
     gender: "",
@@ -30,7 +30,7 @@ export const ModalUserEdit = ({ profileToEdit, userIdtoEdit }) => {
   const refreshHandler = async () => {
     try {
       const data = await request(
-        `/api/profile/edit/${userIdtoEdit}`,
+        `/api/profile/edit/${profileIdtoEdit}`,
         "PUT",
         { ...profile },
         {
@@ -47,7 +47,7 @@ export const ModalUserEdit = ({ profileToEdit, userIdtoEdit }) => {
   const deleteHandler = async () => {
     try {
       const data = await request(
-        `/api/profile/delete/${userIdtoEdit}`,
+        `/api/profile/delete/${profileIdtoEdit}`,
         "DELETE",
         null,
         {
