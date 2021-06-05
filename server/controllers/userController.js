@@ -81,6 +81,16 @@ class UserController {
     return res.json({ token });
   }
 
+  async getUsers(req, res, next) {
+    // '/'
+    try {
+      const users = await User.findAll({});
+      return res.json(users);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
+
   async boost(req, res, next) {
     // '/boost/:id'
     try {
@@ -126,17 +136,17 @@ class UserController {
 
     try {
       const userCount = await User.count({});
-      const profileCount = await Profile.count({})
+      const profileCount = await Profile.count({});
       const oldPeople = await Profile.count({
         where: {
           fullYears: {
-            [Op.gte]: 18,       
-          }
-        }
-      })
+            [Op.gte]: 18,
+          },
+        },
+      });
 
-      const dash = {userCount, profileCount, oldPeople}
-      
+      const dash = { userCount, profileCount, oldPeople };
+
       return res.json(dash);
     } catch (e) {
       next(ApiError.badRequest(e.message));

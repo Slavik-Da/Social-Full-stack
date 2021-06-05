@@ -5,6 +5,7 @@ import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
 
 export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit }) => {
+  console.log(profileToEdit, profileIdtoEdit);
   const [profile, setProfile] = useState({
     name: "",
     gender: "",
@@ -22,11 +23,10 @@ export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit }) => {
     window.M.updateTextFields();
   }, [profileToEdit]);
 
-
   const changeHandler = (event) => {
     setProfile({ ...profile, [event.target.name]: event.target.value });
   };
-  
+
   const refreshHandler = async () => {
     try {
       const data = await request(
@@ -129,9 +129,7 @@ export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit }) => {
         <button className="btn green darken-1" onClick={refreshHandler}>
           Refresh
         </button>
-      </div>
-      <div className="card-action">
-        <button className="btn red ligthten-1" onClick={deleteHandler}>
+        <button className="btn red ligthten-3" onClick={deleteHandler}>
           Delete
         </button>
       </div>
