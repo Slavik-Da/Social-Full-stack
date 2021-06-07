@@ -49,7 +49,7 @@ export const UsersList = ({ users }) => {
                           setUserIdToEdit(user.id);
                           setUserToEdit({
                             email: user.email,
-                            role: user.role
+                            role: user.role,
                           });
                         }}
                       >
@@ -57,9 +57,12 @@ export const UsersList = ({ users }) => {
                       </button>
                     </td>
                     <td>
+                      <NavLink to={`/profiles/${user.id}`}>
                       <button className="btn blue darken-3">
                         Go to profiles
                       </button>
+                      </NavLink>
+                    
                     </td>
                   </tr>
                 );

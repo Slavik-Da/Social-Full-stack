@@ -48,6 +48,20 @@ class ProfileController {
     }
   }
 
+  async getById(req, res, next) {
+    try {
+      const id = req.params.id
+      let profiles;
+      if (id) {
+        profiles = await Profile.findAll({ where: { userId: id } });
+      }
+      return res.json(profiles);
+
+    } catch(e) {
+      next(ApiError.badRequest(e.message))
+    }
+  }
+
   async get(req, res, next) {
     //  '/curr' profiles of current user ????
 
@@ -96,21 +110,29 @@ class ProfileController {
 
   async editAdmin(req, res, next) {
     try {
+      
       const id = req.params.id;
       const { name, gender, fullYears, city } = req.body;
-      console.log(name, gender, fullYears, city);
 
-      await Profile.findOne({ where: { id } }).then(async (result) => {
-        return res.json(
-          await result.update({
-            name,
-            gender,
-            fullYears,
-            city,
-          })
-        );
-      });
-      return res.json({ error: true });
+      if (id) {
+        const succes = await Profile.findOne({
+          where: {  id: id },
+        }).then(async (result) => {
+          return res.json(
+            await result.update({
+              name,
+              gender,
+              fullYears,
+              city,
+            })
+          );
+        });
+        if (succes) {
+          return res.json(`Profile with id ${id} was edited`);
+        } else {
+          return res.json(`Profile with id ${id} not found`);
+        }
+      }
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
@@ -147,7 +169,7 @@ class ProfileController {
     try {
       const candidate = await Profile.destroy({
         where: {
-          id,
+          id: id
         },
       });
       if (candidate) {

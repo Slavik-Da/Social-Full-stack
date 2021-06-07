@@ -5,7 +5,7 @@ import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
 
-export const ProfilesPage = ({userIdAmin}) => {
+export const ProfilesPage = () => {
   const auth = useContext(AuthContext);
   const message = useMessage();
   const { loading, request, error, clearError } = useContext(HttpContext);
@@ -19,10 +19,24 @@ export const ProfilesPage = ({userIdAmin}) => {
 
   const fetchProfiles = useCallback(async () => {
     try {
-      const profilesData = await request("/api/profile/curr", "GET", null, {
-        Authorization: `Bearer ${auth.token}`,
-      });
-      setProfiles(profilesData);
+      if (window.location.href.match("/profiles/")) {
+        const urlId = window.location.href.match("/profiles/")["index"] + 10;
+        const urlParam = window.location.href.slice(urlId);
+        const profilesDataAdmin = await request(
+          `/api/profile/get/${urlParam}`,
+          "GET",
+          null,
+          {
+            Authorization: `Bearer ${auth.token}`,
+          }
+        );
+        setProfiles(profilesDataAdmin);
+      } else {
+        const profilesData = await request("/api/profile/curr", "GET", null, {
+          Authorization: `Bearer ${auth.token}`,
+        });
+        setProfiles(profilesData);
+      }
     } catch (e) {}
   }, [auth.token, request]);
 
