@@ -4,6 +4,7 @@ import { useHttp } from "../hooks/http.hook";
 import { useMessage } from "../hooks/message.hook";
 import { HttpContext } from "../States/Context/HttpContext";
 import { Loader } from "../components/Loader";
+
 export const AuthPage = () => {
   const auth = useContext(AuthContext);
   const message = useMessage();
@@ -29,20 +30,37 @@ export const AuthPage = () => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
-  const registerHandler = async () => {
-    try {
-      const data = await request("/api/user/registration", "POST", { ...form });
-      message(data.message); // notification
-      window.M.updateTextFields(); // makes active input fields
-    } catch (e) {}
+  const registerHandler = () => {
+    request("/api/user/registration", "POST", { ...form })
+      .then((data) => {
+        message(data.message);
+        window.M.updateTextFields();
+      })
+      .catch(message);
   };
 
-  const loginHandler = async () => {
-    try {
-      const data = await request("/api/user/login", "POST", { ...form });
-      auth.login(data.token, data.userId, data.userRole);
-    } catch (e) {}
+  // const registerHandler = async () => {
+  //   try {
+  //     const data = await request("/api/user/registration", "POST", { ...form });
+  //     message(data.message); // notification
+  //     window.M.updateTextFields(); // makes active input fields
+  //   } catch (e) {}
+  // };
+
+  const loginHandler = () => {
+    request("/api/user/login", "POST", { ...form })
+      .then((data) => {
+        auth.login(data.token, data.userId, data.userRole);
+      })
+      .catch(message);
   };
+
+  // const loginHandler = async () => {
+  //   try {
+  //     const data = await request("/api/user/login", "POST", { ...form });
+  //     auth.login(data.token, data.userId, data.userRole);
+  //   } catch (e) {}
+  // };
 
   if (loading) {
     return <Loader />;

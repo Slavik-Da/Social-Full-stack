@@ -4,6 +4,7 @@ import { ProfilesList } from "../components/ProfilesList";
 import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
+import { isAdminLookingForProfile, userIdFromURL } from "../Utils/Utils";
 
 export const ProfilesPage = () => {
   const auth = useContext(AuthContext);
@@ -17,33 +18,64 @@ export const ProfilesPage = () => {
     clearError();
   }, [error, message, clearError]);
 
-  const fetchProfiles = useCallback(async () => {
-    try {
-      if (window.location.href.match("/profiles/")) {
-        const urlId = window.location.href.match("/profiles/")["index"] + 10;
-        const urlParam = window.location.href.slice(urlId); // check if admin is looking for smbds profiles
+  // const isAdminLookingForProfile = window.location.href.match("/profiles/"); //check if Admin from AdminPage looking for profile of selected user
+  // const userIdFromURL = () => {
+  //   if (isAdminLookingForProfile) {
+  //     const indexOfIdInURL =
+  //       window.location.href.match("/profiles/")["index"] + 10;
+  //     const idFromURL = window.location.href.slice(indexOfIdInURL);
+  //     return idFromURL; //get id of selected user by Admin
+  //   }
+  //   return 0;
+  // };
 
-        const profilesDataAdmin = await request(
-          `/api/profile/get/${urlParam}`,
-          "GET",
-          null,
-          {
-            Authorization: `Bearer ${auth.token}`,
-          }
-        );
-        setProfiles(profilesDataAdmin);
-      } else {
-        const profilesData = await request("/api/profile/curr", "GET", null, {
-          Authorization: `Bearer ${auth.token}`,
-        });
-        setProfiles(profilesData);
-      }
-    } catch (e) {}
-  }, [auth.token, request]);
+  const fetchProfilesThen = () => {
+    if (isAdminLookingForProfile) {
+      request(`/api/profile/get/${userIdFromURL}`, "GET", null, {
+        Authorization: `Bearer ${auth.token}`,
+      })
+        .then(setProfiles)
+        .catch(message);
+    } else {
+      request("/api/profile/curr", "GET", null, {
+        Authorization: `Bearer ${auth.token}`,
+      })
+        .then(setProfiles)
+        .catch(message);
+    }
+  };
 
   useEffect(() => {
-    fetchProfiles();
-  }, [fetchProfiles]);
+    fetchProfilesThen();
+  }, []);
+
+  // const fetchProfiles = useCallback(async () => {
+  //   try {
+  //     if (isAdminLookingForProfile) {
+  //       // const urlId = window.location.href.match("/profiles/")["index"] + 10;
+  //       // const urlParam = window.location.href.slice(urlId); // check if admin is looking for smbds profiles
+
+  //       const profilesDataAdmin = await request(
+  //         `/api/profile/get/${userIdFromURL}`,
+  //         "GET",
+  //         null,
+  //         {
+  //           Authorization: `Bearer ${auth.token}`,
+  //         }
+  //       );
+  //       setProfiles(profilesDataAdmin);
+  //     } else {
+  //       const profilesData = await request("/api/profile/curr", "GET", null, {
+  //         Authorization: `Bearer ${auth.token}`,
+  //       });
+  //       setProfiles(profilesData);
+  //     }
+  //   } catch (e) {}
+  // }, [auth.token, request]);
+
+  // useEffect(() => {
+  //   fetchProfiles();
+  // }, [fetchProfiles]);
 
   if (loading) {
     return <Loader />;

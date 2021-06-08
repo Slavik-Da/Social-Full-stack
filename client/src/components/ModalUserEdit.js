@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
+import { isAdminLookingForProfile, userIdFromURL } from "../Utils/Utils";
 
 export const ModalUserEdit = ({
   profileToEdit,
@@ -18,7 +19,6 @@ export const ModalUserEdit = ({
   });
   const message = useMessage();
   const auth = useContext(AuthContext);
-  const history = useHistory();
 
   const { loading, request, error, clearError } = useContext(HttpContext);
 
@@ -31,62 +31,106 @@ export const ModalUserEdit = ({
     setProfile({ ...profile, [event.target.name]: event.target.value });
   };
 
-  const fetchProfiles = async () => {
-    try {
-      if (window.location.href.match("/profiles/")) {
-        const urlId = window.location.href.match("/profiles/")["index"] + 10;
-        const urlParam = window.location.href.slice(urlId); // check if admin is looking for smbds profiles
-        const profilesDataAdmin = await request(
-          `/api/profile/get/${urlParam}`,
-          "GET",
-          null,
-          {
-            Authorization: `Bearer ${auth.token}`,
-          }
-        );
-        setProfiles(profilesDataAdmin);
-      } else {
-        const profilesData = await request("/api/profile/curr", "GET", null, {
-          Authorization: `Bearer ${auth.token}`,
-        });
-        setProfiles(profilesData);
+  const fetchProfiles = () => {
+    if (isAdminLookingForProfile) {
+      request(`/api/profile/get/${userIdFromURL}`, "GET", null, {
+        Authorization: `Bearer ${auth.token}`,
+      })
+        .then(setProfiles)
+        .catch(message);
+    } else {
+      request("/api/profile/curr", "GET", null, {
+        Authorization: `Bearer ${auth.token}`,
+      })
+        .then(setProfiles)
+        .catch(message);
+    }
+  };
+
+  const refreshHandler=()=>{
+    request(
+      `/api/profile/edit/${profileIdtoEdit}`,
+      "PUT",
+      { ...profile },
+      {
+        Authorization: `Bearer ${auth.token}`,
       }
-    } catch (e) {}
-  };
+    )
+    .then(message)
+    .catch(message)
+    .finally(()=>fetchProfiles())
+  }
 
-  const refreshHandler = async () => {
-    try {
-      const data = await request(
-        `/api/profile/edit/${profileIdtoEdit}`,
-        "PUT",
-        { ...profile },
-        {
-          Authorization: `Bearer ${auth.token}`,
-        }
-      );
-      message(`${data.name} profile has been refreshed`); // notification
-      fetchProfiles();
-    } catch (e) {
-      message(e);
-    }
-  };
+  const deleteHandler =() =>{
+    request(
+      `/api/profile/delete/${profileIdtoEdit}`,
+      "DELETE",
+      null,
+      {
+        Authorization: `Bearer ${auth.token}`,
+      }
+    )
+    .then(message)
+    .catch(message)
+    .finally(()=>fetchProfiles())
+  }
 
-  const deleteHandler = async () => {
-    try {
-      const data = await request(
-        `/api/profile/delete/${profileIdtoEdit}`,
-        "DELETE",
-        null,
-        {
-          Authorization: `Bearer ${auth.token}`,
-        }
-      );
-      message(data); // notification
-      fetchProfiles();
-    } catch (e) {
-      message(e);
-    }
-  };
+  // const fetchProfiles = async () => {
+  //   try {
+  //     if (window.location.href.match("/profiles/")) {
+  //       const urlId = window.location.href.match("/profiles/")["index"] + 10;
+  //       const urlParam = window.location.href.slice(urlId); // check if admin is looking for smbds profiles
+  //       const profilesDataAdmin = await request(
+  //         `/api/profile/get/${urlParam}`,
+  //         "GET",
+  //         null,
+  //         {
+  //           Authorization: `Bearer ${auth.token}`,
+  //         }
+  //       );
+  //       setProfiles(profilesDataAdmin);
+  //     } else {
+  //       const profilesData = await request("/api/profile/curr", "GET", null, {
+  //         Authorization: `Bearer ${auth.token}`,
+  //       });
+  //       setProfiles(profilesData);
+  //     }
+  //   } catch (e) {}
+  // };
+
+  // const refreshHandler = async () => {
+  //   try {
+  //     const data = await request(
+  //       `/api/profile/edit/${profileIdtoEdit}`,
+  //       "PUT",
+  //       { ...profile },
+  //       {
+  //         Authorization: `Bearer ${auth.token}`,
+  //       }
+  //     );
+  //     message(`${data.name} profile has been refreshed`); // notification
+  //     fetchProfiles();
+  //   } catch (e) {
+  //     message(e);
+  //   }
+  // };
+
+  // const deleteHandler = async () => {
+  //   try {
+  //     const data = await request(
+  //       `/api/profile/delete/${profileIdtoEdit}`,
+  //       "DELETE",
+  //       null,
+  //       {
+  //         Authorization: `Bearer ${auth.token}`,
+  //       }
+  //     );
+  //     message(data); // notification
+  //     fetchProfiles();
+  //   } catch (e) {
+  //     message(e);
+  //   }
+  // };
 
   //error handler
   useEffect(() => {

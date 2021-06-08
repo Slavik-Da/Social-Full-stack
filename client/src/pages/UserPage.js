@@ -27,22 +27,36 @@ export const UserPage = () => {
     window.M.updateTextFields(); //makes active input fields
   }, []);
 
-  const createHandler = async () => {
-    try {
-      const data = await request(
-        "/api/profile/create",
-        "POST",
-        { ...profile },
-        {
-          Authorization: `Bearer ${auth.token}`,
-        }
-      );
-      message(`${data.name} profile has been created`); // notification
-      history.push("/profiles");
-    } catch (e) {
-      message(e);
-    }
+  const createHandler = () => {
+    request(
+      "/api/profile/create",
+      "POST",
+      { ...profile },
+      {
+        Authorization: `Bearer ${auth.token}`,
+      }
+    )
+      .then(message)
+      .then(history.push("/profiles"))
+      .catch(message);
   };
+
+  // const createHandler = async () => {
+  //   try {
+  //     const data = await request(
+  //       "/api/profile/create",
+  //       "POST",
+  //       { ...profile },
+  //       {
+  //         Authorization: `Bearer ${auth.token}`,
+  //       }
+  //     );
+  //     message(`${data.name} profile has been created`); // notification
+  //     history.push("/profiles");
+  //   } catch (e) {
+  //     message(e);
+  //   }
+  // };
 
   const changeHandler = (event) => {
     setProfile({ ...profile, [event.target.name]: event.target.value });

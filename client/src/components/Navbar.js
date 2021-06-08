@@ -3,19 +3,17 @@ import { NavLink, useHistory } from "react-router-dom";
 import { AuthContext } from "../States/Context/AuthContext";
 
 export const Navbar = () => {
-  const history = useHistory();
   const auth = useContext(AuthContext);
 
   const logoutHandler = (event) => {
     event.preventDefault();
     auth.logout();
-    history.push("/");
   };
   return (
     <nav>
       <div class="nav-wrapper blue darken-1">
         <a href="/" class="brand-logo">
-          {auth.role == "ADMIN" ? "ITOP Admin" : "ITOP User"}
+          {auth.role === "ADMIN" ? "ITOP Admin" : "ITOP User"}
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           {auth.role === "ADMIN" && (

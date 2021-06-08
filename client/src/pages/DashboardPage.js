@@ -17,20 +17,33 @@ export const DashboardPage = () => {
     clearError();
   }, [error, message, clearError]);
 
-  const fetchDash = useCallback(async () => {
-    try {
-      const dashboard = await request("/api/user/dashboard", "GET", null, {
-        Authorization: `Bearer ${auth.token}`,
-      });
-      console.log(dashboard);
-      setDash(dashboard);
-    } catch (e) {
-      message(e);
-    }
-  }, [auth.token, request, message]);
+  const fetchDash = () => {
+    request("/api/user/dashboard", "GET", null, {
+      Authorization: `Bearer ${auth.token}`,
+    })
+      .then(setDash)
+      .catch(message);
+  };
+
   useEffect(() => {
     fetchDash();
-  }, [fetchDash]);
+  });
+
+  // const fetchDash = useCallback(async () => {
+  //   try {
+  //     const dashboard = await request("/api/user/dashboard", "GET", null, {
+  //       Authorization: `Bearer ${auth.token}`,
+  //     });
+  //     console.log(dashboard);
+  //     setDash(dashboard);
+  //   } catch (e) {
+  //     message(e);
+  //   }
+  // }, [auth.token, request, message]);
+  // useEffect(() => {
+  //   fetchDash();
+  // }, [fetchDash]);
+
   if (loading) {
     return <Loader />;
   }

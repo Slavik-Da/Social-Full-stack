@@ -13,7 +13,6 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
 
   const message = useMessage();
   const auth = useContext(AuthContext);
-  const history = useHistory();
 
   const { loading, request, error, clearError } = useContext(HttpContext);
 
@@ -26,49 +25,85 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
-  const fetchUsers = async () => {
-    try {
-      const usersData = await request("/api/user/", "GET", null, {
+  const fetchUsers = () => {
+    request("/api/user/", "GET", null, {
+      Authorization: `Bearer ${auth.token}`,
+    })
+    .then(setUsers)
+    .catch(message)
+  };
+
+  const refreshHandler=()=>{
+    request(
+      `/api/user/edit/${userIdToEdit}`,
+      "PUT",
+      { ...user },
+      {
         Authorization: `Bearer ${auth.token}`,
-      });
-      setUsers(usersData);
-      console.log(usersData);
-    } catch (e) {}
-  };
+      }
+    )
+    .then(message)
+    .catch(message)
+    .finally(()=>fetchUsers())
+  }
 
-  const refreshHandler = async () => {
-    try {
-      const data = await request(
-        `/api/user/edit/${userIdToEdit}`,
-        "PUT",
-        { ...user },
-        {
-          Authorization: `Bearer ${auth.token}`,
-        }
-      );
-      message(data); // notification
-      fetchUsers();
-    } catch (e) {
-      message(e);
-    }
-  };
+  const deleteHandler =() =>{
+    request(
+      `/api/user/delete/${userIdToEdit}`,
+      "DELETE",
+      null,
+      {
+        Authorization: `Bearer ${auth.token}`,
+      }
+    )
+    .then(message)
+    .catch(message)
+    .finally(()=>fetchUsers())
+  }
 
-  const deleteHandler = async () => {
-    try {
-      const data = await request(
-        `/api/user/delete/${userIdToEdit}`,
-        "DELETE",
-        null,
-        {
-          Authorization: `Bearer ${auth.token}`,
-        }
-      );
-      message(data); // notification
-      fetchUsers();
-    } catch (e) {
-      message(e);
-    }
-  };
+  // const fetchUsers = async () => {
+  //   try {
+  //     const usersData = await request("/api/user/", "GET", null, {
+  //       Authorization: `Bearer ${auth.token}`,
+  //     });
+  //     setUsers(usersData);
+  //     console.log(usersData);
+  //   } catch (e) {}
+  // };
+
+  // const refreshHandler = async () => {
+  //   try {
+  //     const data = await request(
+  //       `/api/user/edit/${userIdToEdit}`,
+  //       "PUT",
+  //       { ...user },
+  //       {
+  //         Authorization: `Bearer ${auth.token}`,
+  //       }
+  //     );
+  //     message(data); // notification
+  //     fetchUsers();
+  //   } catch (e) {
+  //     message(e);
+  //   }
+  // };
+
+  // const deleteHandler = async () => {
+  //   try {
+  //     const data = await request(
+  //       `/api/user/delete/${userIdToEdit}`,
+  //       "DELETE",
+  //       null,
+  //       {
+  //         Authorization: `Bearer ${auth.token}`,
+  //       }
+  //     );
+  //     message(data); // notification
+  //     fetchUsers();
+  //   } catch (e) {
+  //     message(e);
+  //   }
+  // };
 
   //error handler
   useEffect(() => {

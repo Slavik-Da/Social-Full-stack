@@ -17,19 +17,31 @@ export const AdminPage = () => {
     clearError();
   }, [error, message, clearError]);
 
-  const fetchUsers = useCallback(async () => {
-    try {
-      const usersData = await request("/api/user/", "GET", null, {
-        Authorization: `Bearer ${auth.token}`,
-      });
-      setUsers(usersData);
-      console.log(usersData);
-    } catch (e) {}
-  }, [auth.token, request]);
-
   useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
+    fetchUsersThen();
+  }, []);
+
+  const fetchUsersThen = () => {
+    request("/api/user/", "GET", null, {
+      Authorization: `Bearer ${auth.token}`,
+    })
+      .then(setUsers)
+      .catch(message);
+  };
+
+  // const fetchUsers = useCallback(async () => {
+  //   try {
+  //     const usersData = await request("/api/user/", "GET", null, {
+  //       Authorization: `Bearer ${auth.token}`,
+  //     });
+  //     setUsers(usersData);
+  //     console.log(usersData);
+  //   } catch (e) {}
+  // }, [auth.token, request]);
+
+  // useEffect(() => {
+  //   fetchUsers();
+  // }, [fetchUsers]);
 
   if (loading) {
     return <Loader />;
