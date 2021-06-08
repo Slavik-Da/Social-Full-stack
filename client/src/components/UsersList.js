@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { ProfilesPage } from "../pages/ProfilesPage";
 import { ModalAdminUserEdit } from "./ModalAdminUserEdit.js";
 
-export const UsersList = ({ users }) => {
+export const UsersList = ({ users, setUsers }) => {
   const [modalActive, setModalActive] = useState(false);
   const [userIdToEdit, setUserIdToEdit] = useState(null);
   const [userToEdit, setUserToEdit] = useState({});
@@ -21,6 +21,7 @@ export const UsersList = ({ users }) => {
             <ModalAdminUserEdit
               userToEdit={userToEdit}
               userIdToEdit={userIdToEdit}
+              setUsers={setUsers}
             />
           </Modal>
           <table>

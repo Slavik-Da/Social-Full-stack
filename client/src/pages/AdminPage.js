@@ -38,7 +38,7 @@ export const AdminPage = () => {
   return (
     <div>
       <h1>Admin page</h1>
-      {!loading && <UsersList users={users} />}
+      {!loading && <UsersList users={users} setUsers={setUsers} />}
     </div>
   );
 };

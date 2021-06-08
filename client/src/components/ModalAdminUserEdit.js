@@ -4,12 +4,13 @@ import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
 
-export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit }) => {
+export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
   const [user, setUser] = useState({
     email: "",
     password: "",
     role: "",
   });
+
 
   const message = useMessage();
   const auth = useContext(AuthContext);
@@ -24,7 +25,17 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit }) => {
 
   const changeHandler = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
-    console.log(user);
+  };
+
+
+  const fetchUsers = async () => {
+    try {
+      const usersData = await request("/api/user/", "GET", null, {
+        Authorization: `Bearer ${auth.token}`,
+      });
+      setUsers(usersData);
+      console.log(usersData)
+    } catch (e) {}
   };
 
   const refreshHandler = async () => {
@@ -37,8 +48,8 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit }) => {
           Authorization: `Bearer ${auth.token}`,
         }
       );
-      message(`User with id ${userIdToEdit} has been refreshed`); // notification
-      history.push("/");
+      message(data); // notification
+      fetchUsers()
     } catch (e) {
       message(e);
     }
@@ -54,8 +65,9 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit }) => {
           Authorization: `Bearer ${auth.token}`,
         }
       );
-      message(`User with id ${userIdToEdit} has been deleted`); // notification
-      history.push("/profiles");
+      message(data); // notification
+      fetchUsers()
+      
     } catch (e) {
       message(e);
     }

@@ -3,7 +3,7 @@ import { Modal } from "./Modal.js";
 import { NavLink } from "react-router-dom";
 import { ModalUserEdit } from "./ModalUserEdit.js";
 
-export const ProfilesList = ({ profiles }) => {
+export const ProfilesList = ({ profiles, setProfiles }) => {
   const [modalActive, setModalActive] = useState(false);
   const [profileIdtoEdit, setProfileIdtoEdit] = useState(null)
   const [profileToEdit, setProfileToEdit]= useState({});
@@ -32,7 +32,7 @@ export const ProfilesList = ({ profiles }) => {
     return (
       <>
       <Modal active={modalActive} setActive={setModalActive}>
-        <ModalUserEdit profileToEdit={profileToEdit} profileIdtoEdit={profileIdtoEdit}/>
+        <ModalUserEdit profileToEdit={profileToEdit} profileIdtoEdit={profileIdtoEdit} setProfiles={setProfiles}/>
       </Modal>
       <div>
         <table>

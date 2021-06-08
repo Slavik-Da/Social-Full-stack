@@ -55,7 +55,7 @@ export const ProfilesPage = () => {
   return (
     <div>
       <h1>Profiles page</h1>
-      {!loading && <ProfilesList profiles={profiles} />}
+      {!loading && <ProfilesList profiles={profiles} setProfiles={setProfiles} />}
     </div>
   );
 };
