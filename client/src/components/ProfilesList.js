@@ -8,14 +8,24 @@ export const ProfilesList = ({ profiles }) => {
   const [profileIdtoEdit, setProfileIdtoEdit] = useState(null)
   const [profileToEdit, setProfileToEdit]= useState({});
 
+  // if (!profiles.length && !window.location.href.match("/profiles/")) {
+  //   return (
+  //     <p>
+  //       User have not profiles, you can go back to
+  //       <NavLink to="/admin"> Admin page</NavLink>
+  //     </p>
+  //   );
+  // }
+
   if (!profiles.length) {
     return (
       <p>
-        You have not profiles, you can go to
+        Profiles list is empty, you can go to
         <NavLink to="/"> Create page</NavLink>
       </p>
     );
   }
+
 
 
   if (profiles)

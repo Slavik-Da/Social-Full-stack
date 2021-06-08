@@ -38,7 +38,7 @@ export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit }) => {
         }
       );
       message(`${data.name} profile has been refreshed`); // notification
-      history.push("/profiles");
+      //history.push("/profiles");
     } catch (e) {
       message(e);
     }
@@ -55,7 +55,7 @@ export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit }) => {
         }
       );
       message(`Profile has been deleted`); // notification
-      history.push("/profiles");
+     // history.push("/profiles");
     } catch (e) {
       message(e);
     }
