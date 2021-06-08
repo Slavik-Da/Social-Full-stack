@@ -11,7 +11,6 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
     role: "",
   });
 
-
   const message = useMessage();
   const auth = useContext(AuthContext);
   const history = useHistory();
@@ -27,14 +26,13 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
-
   const fetchUsers = async () => {
     try {
       const usersData = await request("/api/user/", "GET", null, {
         Authorization: `Bearer ${auth.token}`,
       });
       setUsers(usersData);
-      console.log(usersData)
+      console.log(usersData);
     } catch (e) {}
   };
 
@@ -49,7 +47,7 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
         }
       );
       message(data); // notification
-      fetchUsers()
+      fetchUsers();
     } catch (e) {
       message(e);
     }
@@ -66,8 +64,7 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
         }
       );
       message(data); // notification
-      fetchUsers()
-      
+      fetchUsers();
     } catch (e) {
       message(e);
     }
@@ -83,7 +80,7 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
     <div>
       <div className="input-field">
         <h6>User id: {userIdToEdit}</h6>
-        <br/>
+        <br />
       </div>
 
       <div className="input-field">
@@ -109,16 +106,16 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
         <label htmlFor="password">Password</label>
       </div>
       <p onChange={changeHandler}>
-                  <label>
-                    <input type="radio" name="role" value="USER" />
-                    <span>User role</span>
-                  </label>
-                  <br />
-                  <label>
-                    <input type="radio" name="role" value="ADMIN" />
-                    <span>Admin role</span>
-                  </label>
-                </p>
+        <label>
+          <input type="radio" name="role" value="USER" />
+          <span>User role</span>
+        </label>
+        <br />
+        <label>
+          <input type="radio" name="role" value="ADMIN" />
+          <span>Admin role</span>
+        </label>
+      </p>
 
       <div className="card-action">
         <button className="btn green darken-1" onClick={refreshHandler}>

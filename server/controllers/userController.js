@@ -131,7 +131,6 @@ class UserController {
     }
   }
 
-
   async deleteUser(req, res, next) {
     // '/delete'
 
@@ -154,9 +153,7 @@ class UserController {
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
-    
   }
-
 
   async howManyU(req, res, next) {
     // '/dashboard  //admin only

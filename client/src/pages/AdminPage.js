@@ -11,30 +11,29 @@ export const AdminPage = () => {
   const { loading, request, error, clearError } = useContext(HttpContext);
   const [users, setUsers] = useState([]);
 
-    //error handler
-    useEffect(() => {
-        message(error);
-        clearError();
-      }, [error, message, clearError]);
+  //error handler
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
 
+  const fetchUsers = useCallback(async () => {
+    try {
+      const usersData = await request("/api/user/", "GET", null, {
+        Authorization: `Bearer ${auth.token}`,
+      });
+      setUsers(usersData);
+      console.log(usersData);
+    } catch (e) {}
+  }, [auth.token, request]);
 
-      const fetchUsers = useCallback(async () => {
-        try {
-          const usersData = await request("/api/user/", "GET", null, {
-            Authorization: `Bearer ${auth.token}`,
-          });
-          setUsers(usersData);
-          console.log(usersData)
-        } catch (e) {}
-      }, [auth.token, request]);
-    
-      useEffect(() => {
-        fetchUsers();
-      }, [fetchUsers]);
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
-      if (loading) {
-        return <Loader />;
-      }
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div>
       <h1>Admin page</h1>

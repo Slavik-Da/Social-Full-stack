@@ -4,7 +4,11 @@ import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
 
-export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit, setProfiles }) => {
+export const ModalUserEdit = ({
+  profileToEdit,
+  profileIdtoEdit,
+  setProfiles,
+}) => {
   console.log(profileToEdit, profileIdtoEdit);
   const [profile, setProfile] = useState({
     name: "",
@@ -27,13 +31,11 @@ export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit, setProfiles }) =
     setProfile({ ...profile, [event.target.name]: event.target.value });
   };
 
-
   const fetchProfiles = async () => {
     try {
-      if (window.location.href.match("/profiles/")) {  
+      if (window.location.href.match("/profiles/")) {
         const urlId = window.location.href.match("/profiles/")["index"] + 10;
         const urlParam = window.location.href.slice(urlId); // check if admin is looking for smbds profiles
-
         const profilesDataAdmin = await request(
           `/api/profile/get/${urlParam}`,
           "GET",
@@ -50,9 +52,7 @@ export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit, setProfiles }) =
         setProfiles(profilesData);
       }
     } catch (e) {}
-  }
-
-
+  };
 
   const refreshHandler = async () => {
     try {
@@ -65,7 +65,7 @@ export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit, setProfiles }) =
         }
       );
       message(`${data.name} profile has been refreshed`); // notification
-      fetchProfiles()
+      fetchProfiles();
     } catch (e) {
       message(e);
     }
@@ -82,7 +82,7 @@ export const ModalUserEdit = ({ profileToEdit, profileIdtoEdit, setProfiles }) =
         }
       );
       message(data); // notification
-      fetchProfiles()
+      fetchProfiles();
     } catch (e) {
       message(e);
     }

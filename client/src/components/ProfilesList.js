@@ -5,8 +5,8 @@ import { ModalUserEdit } from "./ModalUserEdit.js";
 
 export const ProfilesList = ({ profiles, setProfiles }) => {
   const [modalActive, setModalActive] = useState(false);
-  const [profileIdtoEdit, setProfileIdtoEdit] = useState(null)
-  const [profileToEdit, setProfileToEdit]= useState({});
+  const [profileIdtoEdit, setProfileIdtoEdit] = useState(null);
+  const [profileToEdit, setProfileToEdit] = useState({});
 
   // if (!profiles.length && !window.location.href.match("/profiles/")) {
   //   return (
@@ -26,52 +26,61 @@ export const ProfilesList = ({ profiles, setProfiles }) => {
     );
   }
 
-
-
   if (profiles)
     return (
       <>
-      <Modal active={modalActive} setActive={setModalActive}>
-        <ModalUserEdit profileToEdit={profileToEdit} profileIdtoEdit={profileIdtoEdit} setProfiles={setProfiles}/>
-      </Modal>
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Gender</th>
-              <th>Age</th>
-              <th>City</th>
-              <th>Edit</th>
-            </tr>
-          </thead>
+        <Modal active={modalActive} setActive={setModalActive}>
+          <ModalUserEdit
+            profileToEdit={profileToEdit}
+            profileIdtoEdit={profileIdtoEdit}
+            setProfiles={setProfiles}
+          />
+        </Modal>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>City</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {profiles.map((profile) => {
-              return (
-                <tr key={profile.id}>
-                  <td>{profile.id}</td>
-                  <td>{profile.name}</td>
-                  <td>{profile.gender}</td>
-                  <td>{profile.fullYears}</td>
-                  <td>{profile.city}</td>
-                  <td><button className="btn blue darken-2" onClick={()=>{
-                    setModalActive(true)
-                    setProfileIdtoEdit(profile.id)
-                    setProfileToEdit({
-                      name:profile.name,
-                      gender: profile.gender,
-                      fullYears: profile.fullYears,
-                      city: profile.city
-                    })
-                     }}>...</button></td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+            <tbody>
+              {profiles.map((profile) => {
+                return (
+                  <tr key={profile.id}>
+                    <td>{profile.id}</td>
+                    <td>{profile.name}</td>
+                    <td>{profile.gender}</td>
+                    <td>{profile.fullYears}</td>
+                    <td>{profile.city}</td>
+                    <td>
+                      <button
+                        className="btn blue darken-2"
+                        onClick={() => {
+                          setModalActive(true);
+                          setProfileIdtoEdit(profile.id);
+                          setProfileToEdit({
+                            name: profile.name,
+                            gender: profile.gender,
+                            fullYears: profile.fullYears,
+                            city: profile.city,
+                          });
+                        }}
+                      >
+                        ...
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </>
     );
 };

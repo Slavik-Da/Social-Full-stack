@@ -50,15 +50,14 @@ class ProfileController {
 
   async getById(req, res, next) {
     try {
-      const id = req.params.id
+      const id = req.params.id;
       let profiles;
       if (id) {
         profiles = await Profile.findAll({ where: { userId: id } });
       }
       return res.json(profiles);
-
-    } catch(e) {
-      next(ApiError.badRequest(e.message))
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
     }
   }
 
@@ -110,13 +109,12 @@ class ProfileController {
 
   async editAdmin(req, res, next) {
     try {
-      
       const id = req.params.id;
       const { name, gender, fullYears, city } = req.body;
 
       if (id) {
         const succes = await Profile.findOne({
-          where: {  id: id },
+          where: { id: id },
         }).then(async (result) => {
           return res.json(
             await result.update({
@@ -169,7 +167,7 @@ class ProfileController {
     try {
       const candidate = await Profile.destroy({
         where: {
-          id: id
+          id: id,
         },
       });
       if (candidate) {

@@ -33,7 +33,7 @@ export const AuthPage = () => {
     try {
       const data = await request("/api/user/registration", "POST", { ...form });
       message(data.message); // notification
-      window.M.updateTextFields();
+      window.M.updateTextFields(); // makes active input fields
     } catch (e) {}
   };
 

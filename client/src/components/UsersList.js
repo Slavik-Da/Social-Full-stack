@@ -59,11 +59,10 @@ export const UsersList = ({ users, setUsers }) => {
                     </td>
                     <td>
                       <NavLink to={`/profiles/${user.id}`}>
-                      <button className="btn blue darken-3">
-                        Go to profiles
-                      </button>
+                        <button className="btn blue darken-3">
+                          Go to profiles
+                        </button>
                       </NavLink>
-                    
                     </td>
                   </tr>
                 );

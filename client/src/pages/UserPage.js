@@ -38,7 +38,7 @@ export const UserPage = () => {
         }
       );
       message(`${data.name} profile has been created`); // notification
-      history.push('/profiles')
+      history.push("/profiles");
     } catch (e) {
       message(e);
     }
@@ -113,7 +113,6 @@ export const UserPage = () => {
             Create
           </button>
         </div>
-        
       </div>
     </div>
   );
