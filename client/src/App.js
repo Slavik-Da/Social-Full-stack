@@ -3,7 +3,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { useAuth } from "./hooks/auth.hook";
 import { Routes } from "./routes";
 import { HttpProvider } from "./States/HttpProvider";
-import { HttpContext } from "./States/Context/HttpContext";
 import { Navbar } from "./components/Navbar";
 import { Loader } from "./components/Loader";
 import "materialize-css";

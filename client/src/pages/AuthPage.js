@@ -24,7 +24,7 @@ export const AuthPage = () => {
 
   useEffect(() => {
     window.M.updateTextFields(); //makes active input fields
-  }, []);
+  });
 
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -34,7 +34,6 @@ export const AuthPage = () => {
     request("/api/user/registration", "POST", { ...form })
       .then((data) => {
         message(data.message);
-        window.M.updateTextFields();
       })
       .catch(message);
   };
