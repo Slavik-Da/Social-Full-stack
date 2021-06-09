@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../States/Context/AuthContext";
-import { useHttp } from "../hooks/http.hook";
 import { useMessage } from "../hooks/message.hook";
 import { HttpContext } from "../States/Context/HttpContext";
 import { Loader } from "../components/Loader";
@@ -38,14 +37,6 @@ export const AuthPage = () => {
       .catch(message);
   };
 
-  // const registerHandler = async () => {
-  //   try {
-  //     const data = await request("/api/user/registration", "POST", { ...form });
-  //     message(data.message); // notification
-  //     window.M.updateTextFields(); // makes active input fields
-  //   } catch (e) {}
-  // };
-
   const loginHandler = () => {
     request("/api/user/login", "POST", { ...form })
       .then((data) => {
@@ -53,13 +44,6 @@ export const AuthPage = () => {
       })
       .catch(message);
   };
-
-  // const loginHandler = async () => {
-  //   try {
-  //     const data = await request("/api/user/login", "POST", { ...form });
-  //     auth.login(data.token, data.userId, data.userRole);
-  //   } catch (e) {}
-  // };
 
   if (loading) {
     return <Loader />;

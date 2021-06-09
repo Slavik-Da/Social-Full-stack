@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "./Modal.js";
 import { NavLink } from "react-router-dom";
-import { ProfilesPage } from "../pages/ProfilesPage";
 import { ModalAdminUserEdit } from "./ModalAdminUserEdit.js";
 
 export const UsersList = ({ users, setUsers }) => {

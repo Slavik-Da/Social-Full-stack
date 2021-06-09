@@ -7,7 +7,7 @@ import { HttpContext } from "../States/Context/HttpContext";
 export const UserPage = () => {
   const auth = useContext(AuthContext);
   const message = useMessage();
-  const { loading, request, error, clearError } = useContext(HttpContext);
+  const { request, error, clearError } = useContext(HttpContext);
   const history = useHistory();
 
   const [profile, setProfile] = useState({
@@ -40,23 +40,6 @@ export const UserPage = () => {
       .then(history.push("/profiles"))
       .catch(message);
   };
-
-  // const createHandler = async () => {
-  //   try {
-  //     const data = await request(
-  //       "/api/profile/create",
-  //       "POST",
-  //       { ...profile },
-  //       {
-  //         Authorization: `Bearer ${auth.token}`,
-  //       }
-  //     );
-  //     message(`${data.name} profile has been created`); // notification
-  //     history.push("/profiles");
-  //   } catch (e) {
-  //     message(e);
-  //   }
-  // };
 
   const changeHandler = (event) => {
     setProfile({ ...profile, [event.target.name]: event.target.value });

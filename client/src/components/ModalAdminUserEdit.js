@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router";
 import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
@@ -14,7 +13,7 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
   const message = useMessage();
   const auth = useContext(AuthContext);
 
-  const { loading, request, error, clearError } = useContext(HttpContext);
+  const { request, error, clearError } = useContext(HttpContext);
 
   useEffect(() => {
     setUser(userToEdit);
@@ -29,11 +28,11 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
     request("/api/user/", "GET", null, {
       Authorization: `Bearer ${auth.token}`,
     })
-    .then(setUsers)
-    .catch(message)
+      .then(setUsers)
+      .catch(message);
   };
 
-  const refreshHandler=()=>{
+  const refreshHandler = () => {
     request(
       `/api/user/edit/${userIdToEdit}`,
       "PUT",
@@ -42,68 +41,19 @@ export const ModalAdminUserEdit = ({ userToEdit, userIdToEdit, setUsers }) => {
         Authorization: `Bearer ${auth.token}`,
       }
     )
-    .then(message)
-    .catch(message)
-    .finally(()=>fetchUsers())
-  }
+      .then(message)
+      .catch(message)
+      .finally(() => fetchUsers());
+  };
 
-  const deleteHandler =() =>{
-    request(
-      `/api/user/delete/${userIdToEdit}`,
-      "DELETE",
-      null,
-      {
-        Authorization: `Bearer ${auth.token}`,
-      }
-    )
-    .then(message)
-    .catch(message)
-    .finally(()=>fetchUsers())
-  }
-
-  // const fetchUsers = async () => {
-  //   try {
-  //     const usersData = await request("/api/user/", "GET", null, {
-  //       Authorization: `Bearer ${auth.token}`,
-  //     });
-  //     setUsers(usersData);
-  //     console.log(usersData);
-  //   } catch (e) {}
-  // };
-
-  // const refreshHandler = async () => {
-  //   try {
-  //     const data = await request(
-  //       `/api/user/edit/${userIdToEdit}`,
-  //       "PUT",
-  //       { ...user },
-  //       {
-  //         Authorization: `Bearer ${auth.token}`,
-  //       }
-  //     );
-  //     message(data); // notification
-  //     fetchUsers();
-  //   } catch (e) {
-  //     message(e);
-  //   }
-  // };
-
-  // const deleteHandler = async () => {
-  //   try {
-  //     const data = await request(
-  //       `/api/user/delete/${userIdToEdit}`,
-  //       "DELETE",
-  //       null,
-  //       {
-  //         Authorization: `Bearer ${auth.token}`,
-  //       }
-  //     );
-  //     message(data); // notification
-  //     fetchUsers();
-  //   } catch (e) {
-  //     message(e);
-  //   }
-  // };
+  const deleteHandler = () => {
+    request(`/api/user/delete/${userIdToEdit}`, "DELETE", null, {
+      Authorization: `Bearer ${auth.token}`,
+    })
+      .then(message)
+      .catch(message)
+      .finally(() => fetchUsers());
+  };
 
   //error handler
   useEffect(() => {
