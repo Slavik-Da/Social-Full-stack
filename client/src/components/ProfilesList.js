@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "./Modal.js";
 import { NavLink } from "react-router-dom";
 import { ModalUserEdit } from "./ModalUserEdit.js";
+import { userIdFromURL } from "../Utils/Utils.js";
 
 export const ProfilesList = ({ profiles, setProfiles }) => {
   const [modalActive, setModalActive] = useState(false);
@@ -16,6 +17,15 @@ export const ProfilesList = ({ profiles, setProfiles }) => {
   //     </p>
   //   );
   // }
+
+  if (!profiles.length && userIdFromURL()) {
+    return (
+      <p>
+        User with id: {userIdFromURL()} have not profiles, you can go back to
+        <NavLink to="/admin"> Admin page</NavLink>
+      </p>
+    );
+  }
 
   if (!profiles.length) {
     return (
