@@ -33,13 +33,13 @@ export const ModalUserEdit = ({
 
   const fetchProfiles = () => {
     if (userIdFromURL) {
-      request(`/api/profile/get/${userIdFromURL()}`, "GET", null, {
+      request(`/api/profile/${userIdFromURL()}`, "GET", null, {
         Authorization: `Bearer ${auth.token}`,
       })
         .then(setProfiles)
         .catch(message);
     } else {
-      request("/api/profile/curr", "GET", null, {
+      request("/api/profile", "GET", null, {
         Authorization: `Bearer ${auth.token}`,
       })
         .then(setProfiles)
