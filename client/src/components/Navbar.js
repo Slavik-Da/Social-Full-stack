@@ -1,8 +1,12 @@
 import React, { useContext } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { AuthContext } from "../States/Context/AuthContext";
+import { IsAdminRole } from "../Utils/Utils";
 
 export const Navbar = () => {
+  const ITOP_ADMIN = "ITOP Admin";
+  const ITOP_USER = "ITOP User";
+  
   const auth = useContext(AuthContext);
 
   const logoutHandler = (event) => {
@@ -13,15 +17,15 @@ export const Navbar = () => {
     <nav>
       <div class="nav-wrapper blue darken-1">
         <a href="/" class="brand-logo">
-          {auth.role === "ADMIN" ? "ITOP Admin" : "ITOP User"}
+          {IsAdminRole ? ITOP_ADMIN : ITOP_USER}
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          {auth.role === "ADMIN" && (
+          {IsAdminRole && (
             <li>
               <NavLink to="/admin">To admin page</NavLink>
             </li>
           )}
-          {auth.role === "ADMIN" && (
+          {IsAdminRole && (
             <li>
               <NavLink to="/dashboard">To dashboard page</NavLink>
             </li>

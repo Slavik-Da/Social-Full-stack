@@ -26,8 +26,8 @@ export const userIdFromURLLL = () => {
   return 0;
 };
 
-// export const IsAdminRole =( )=> {
-//     const auth = useContext(AuthContext);
+export const IsAdminRole =( )=> {
+    const auth = useContext(AuthContext);
 
-//      return auth.role === "ADMIN"
-// }
+     return auth.role === "ADMIN"
+}
