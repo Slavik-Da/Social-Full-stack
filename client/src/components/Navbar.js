@@ -17,15 +17,15 @@ export const Navbar = () => {
     <nav>
       <div class="nav-wrapper blue darken-1">
         <a href="/" class="brand-logo">
-          {IsAdminRole ? ITOP_ADMIN : ITOP_USER}
+          {IsAdminRole() ? ITOP_ADMIN : ITOP_USER}
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          {IsAdminRole && (
+          {IsAdminRole() && (
             <li>
               <NavLink to="/admin">To admin page</NavLink>
             </li>
           )}
-          {IsAdminRole && (
+          {IsAdminRole() && (
             <li>
               <NavLink to="/dashboard">To dashboard page</NavLink>
             </li>
