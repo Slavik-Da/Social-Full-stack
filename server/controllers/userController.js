@@ -91,23 +91,23 @@ class UserController {
     }
   }
 
-  async boost(req, res, next) {
-    // '/boost/:id'
-    try {
-      const id = req.params.id;
+  // async boost(req, res, next) {
+  //   // '/boost/:id'
+  //   try {
+  //     const id = req.params.id;
 
-      await User.findOne({ where: { id } }).then(async (result) => {
-        return res.json(
-          await result.update({
-            role: "ADMIN",
-          })
-        );
-      });
-      return res.json({ error: true });
-    } catch (e) {
-      next(ApiError.badRequest(e.message));
-    }
-  }
+  //     await User.findOne({ where: { id } }).then(async (result) => {
+  //       return res.json(
+  //         await result.update({
+  //           role: "ADMIN",
+  //         })
+  //       );
+  //     });
+  //     return res.json({ error: true });
+  //   } catch (e) {
+  //     next(ApiError.badRequest(e.message));
+  //   }
+  // }
 
   async edit(req, res, next) {
     // '/edit/:id'
