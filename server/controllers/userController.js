@@ -115,7 +115,7 @@ class UserController {
       const id = req.params.id;
       const { email, password, role } = req.body;
 
-      if(password) {
+      if (password) {
         const hashPassword = await bcrypt.hash(password, 5);
         await User.findOne({ where: { id } }).then(async (result) => {
           return res.json(
@@ -133,16 +133,13 @@ class UserController {
           return res.json(
             await result.update({
               email,
-              role
+              role,
             })
           );
         });
         const token = generateJwt(user.id, user.email, user.role);
         return res.json({ token });
       }
-      
-
-
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
@@ -153,7 +150,6 @@ class UserController {
 
     try {
       const id = req.params.id;
-
       if (id) {
         const candidate = await User.destroy({
           where: {
