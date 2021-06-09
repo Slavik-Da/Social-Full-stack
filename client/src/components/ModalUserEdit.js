@@ -32,7 +32,7 @@ export const ModalUserEdit = ({
   };
 
   const fetchProfiles = () => {
-    if (userIdFromURL) {
+    if (userIdFromURL()) {
       request(`/api/profile/${userIdFromURL()}`, "GET", null, {
         Authorization: `Bearer ${auth.token}`,
       })
@@ -62,6 +62,7 @@ export const ModalUserEdit = ({
   };
 
   const deleteHandler = () => {
+    console.log(profileIdtoEdit)
     request(`/api/profile/delete/${profileIdtoEdit}`, "DELETE", null, {
       Authorization: `Bearer ${auth.token}`,
     })

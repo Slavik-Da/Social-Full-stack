@@ -138,6 +138,7 @@ class ProfileController {
 
   async delete(req, res, next) {
     // '/delete/'
+    console.log("Hi from delete")
     try {
       const userId = req.user.id;
       const id = req.params.id;
@@ -164,6 +165,7 @@ class ProfileController {
   async deleteAdmin(req, res, next) {
     // '/delete/:id'  //admin only
     const id = req.params.id;
+    console.log("hi from deleteAdmin")
     try {
       const candidate = await Profile.destroy({
         where: {

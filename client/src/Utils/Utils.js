@@ -24,7 +24,7 @@ export const userIdFromURL = () => {
     const idFromURL = window.location.href.slice(indexOfIdInURL);
     return idFromURL; //get id of selected user by Admin
   } else {
-    return 0;
+    return false;
   }
 };
 
