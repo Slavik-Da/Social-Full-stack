@@ -62,7 +62,7 @@ class ProfileController {
   }
 
   async get(req, res, next) {
-    //  '/curr' profiles of current user ????
+    //  '/' profiles of current user ????
 
     try {
       const id = req.user.id;
@@ -77,7 +77,7 @@ class ProfileController {
   }
 
   async edit(req, res, next) {
-    // '/edit/:id'
+    // '/:id'
     try {
       const userId = req.user.id;
       const id = req.params.id;
@@ -180,33 +180,33 @@ class ProfileController {
     }
   }
 
-  async howManyP(req, res, next) {
-    // '/dashp'  //admin only
+  // async howManyP(req, res, next) {
+  //   // '/dashp'  //admin only
 
-    try {
-      const count = await Profile.count({});
+  //   try {
+  //     const count = await Profile.count({});
 
-      return res.json(count);
-    } catch (e) {
-      next(ApiError.badRequest(e.message));
-    }
-  }
+  //     return res.json(count);
+  //   } catch (e) {
+  //     next(ApiError.badRequest(e.message));
+  //   }
+  // }
 
-  async howMany18(req, res, next) {
-    // '/dash18'
-    try {
-      const a = await Profile.count({
-        where: {
-          fullYears: {
-            [Op.gte]: 18,
-          },
-        },
-      });
-      return res.json(a);
-    } catch (e) {
-      next(ApiError.badRequest(e.message));
-    }
-  }
+  // async howMany18(req, res, next) {
+  //   // '/dash18'
+  //   try {
+  //     const a = await Profile.count({
+  //       where: {
+  //         fullYears: {
+  //           [Op.gte]: 18,
+  //         },
+  //       },
+  //     });
+  //     return res.json(a);
+  //   } catch (e) {
+  //     next(ApiError.badRequest(e.message));
+  //   }
+  // }
 }
 
 module.exports = new ProfileController();
