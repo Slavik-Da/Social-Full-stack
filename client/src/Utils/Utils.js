@@ -15,7 +15,7 @@ import { AuthContext } from "../States/Context/AuthContext";
 //   return 0;
 // };
 
-export const userIdFromURLLL = () => {
+export const userIdFromURL = () => {
   const isAdminLookingForProfile = window.location.href.match("/profiles/");
   if (isAdminLookingForProfile) {
     const indexOfIdInURL =
@@ -28,6 +28,5 @@ export const userIdFromURLLL = () => {
 
 export const IsAdminRole =( )=> {
     const auth = useContext(AuthContext);
-
-     return auth.role === "ADMIN"
+     return auth.role === "ADMIN"  //check if is admin role from AuthContext
 }

@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
-import { userIdFromURLLL } from "../Utils/Utils";
+import { userIdFromURL } from "../Utils/Utils";
 
 export const ModalUserEdit = ({
   profileToEdit,
@@ -32,8 +32,8 @@ export const ModalUserEdit = ({
   };
 
   const fetchProfiles = () => {
-    if (userIdFromURLLL) {
-      request(`/api/profile/get/${userIdFromURLLL()}`, "GET", null, {
+    if (userIdFromURL) {
+      request(`/api/profile/get/${userIdFromURL()}`, "GET", null, {
         Authorization: `Bearer ${auth.token}`,
       })
         .then(setProfiles)

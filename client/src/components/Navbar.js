@@ -3,10 +3,10 @@ import { NavLink, useHistory } from "react-router-dom";
 import { AuthContext } from "../States/Context/AuthContext";
 import { IsAdminRole } from "../Utils/Utils";
 
+const ITOP_ADMIN = "ITOP Admin";
+const ITOP_USER = "ITOP User";
+
 export const Navbar = () => {
-  const ITOP_ADMIN = "ITOP Admin";
-  const ITOP_USER = "ITOP User";
-  
   const auth = useContext(AuthContext);
 
   const logoutHandler = (event) => {
