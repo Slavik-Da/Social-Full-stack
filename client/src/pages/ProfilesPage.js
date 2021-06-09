@@ -4,7 +4,7 @@ import { ProfilesList } from "../components/ProfilesList";
 import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
-import { userIdFromURL } from "../Utils/Utils";
+import { LocationPathName, userIdFromURL } from "../Utils/Utils";
 
 export const ProfilesPage = () => {
   const auth = useContext(AuthContext);
@@ -47,7 +47,7 @@ export const ProfilesPage = () => {
 
   useEffect(() => {
     fetchProfiles();
-  }, []);
+  }, [LocationPathName()]);
 
   // const fetchProfiles = useCallback(async () => {
   //   try {

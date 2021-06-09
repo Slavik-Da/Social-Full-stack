@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../States/Context/AuthContext";
+import {useLocation} from 'react-router-dom'
 
 // export const isAdminLookingForProfile =()=> {
 //    return window.location.href.match("/profiles/")
@@ -32,3 +33,8 @@ export const IsAdminRole = () => {
   const auth = useContext(AuthContext);
   return auth.role === "ADMIN"; //check if is admin role from AuthContext
 };
+
+export const LocationPathName= () =>{
+    const location = useLocation()
+    return location.pathname 
+}
