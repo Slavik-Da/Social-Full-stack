@@ -24,7 +24,7 @@ class UserController {
       const candidate = await User.findOne({ where: { email } });
       console.log(candidate);
       if (candidate) {
-        // Email is in use?
+        // Is email in use
         return next(ApiError.badRequest("User with this email already exists"));
       }
       const hashPassword = await bcrypt.hash(password, 5);
@@ -91,24 +91,6 @@ class UserController {
     }
   }
 
-  // async boost(req, res, next) {
-  //   // '/boost/:id'
-  //   try {
-  //     const id = req.params.id;
-
-  //     await User.findOne({ where: { id } }).then(async (result) => {
-  //       return res.json(
-  //         await result.update({
-  //           role: "ADMIN",
-  //         })
-  //       );
-  //     });
-  //     return res.json({ error: true });
-  //   } catch (e) {
-  //     next(ApiError.badRequest(e.message));
-  //   }
-  // }
-
   async edit(req, res, next) {
     // '/edit/:id'
     try {
@@ -124,7 +106,9 @@ class UserController {
               password: hashPassword,
               role,
             })
-            .then(res.json(`User with id: ${id} was changed. New password saved`));
+            .then(
+              res.json(`User with id: ${id} was changed. New password saved`)
+            );
         });
       } else {
         await User.findOne({ where: { id } }).then(async (result) => {
