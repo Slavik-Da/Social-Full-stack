@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
-import { isAdminLookingForProfile, userIdFromURL } from "../Utils/Utils";
+import { userIdFromURLLL } from "../Utils/Utils";
 
 export const ModalUserEdit = ({
   profileToEdit,
@@ -32,8 +32,8 @@ export const ModalUserEdit = ({
   };
 
   const fetchProfiles = () => {
-    if (isAdminLookingForProfile) {
-      request(`/api/profile/get/${userIdFromURL}`, "GET", null, {
+    if (userIdFromURLLL) {
+      request(`/api/profile/get/${userIdFromURLLL()}`, "GET", null, {
         Authorization: `Bearer ${auth.token}`,
       })
         .then(setProfiles)
@@ -47,7 +47,7 @@ export const ModalUserEdit = ({
     }
   };
 
-  const refreshHandler=()=>{
+  const refreshHandler = () => {
     request(
       `/api/profile/edit/${profileIdtoEdit}`,
       "PUT",
@@ -56,24 +56,19 @@ export const ModalUserEdit = ({
         Authorization: `Bearer ${auth.token}`,
       }
     )
-    .then(message)
-    .catch(message)
-    .finally(()=>fetchProfiles())
-  }
+      .then(message)
+      .catch(message)
+      .finally(() => fetchProfiles());
+  };
 
-  const deleteHandler =() =>{
-    request(
-      `/api/profile/delete/${profileIdtoEdit}`,
-      "DELETE",
-      null,
-      {
-        Authorization: `Bearer ${auth.token}`,
-      }
-    )
-    .then(message)
-    .catch(message)
-    .finally(()=>fetchProfiles())
-  }
+  const deleteHandler = () => {
+    request(`/api/profile/delete/${profileIdtoEdit}`, "DELETE", null, {
+      Authorization: `Bearer ${auth.token}`,
+    })
+      .then(message)
+      .catch(message)
+      .finally(() => fetchProfiles());
+  };
 
   // const fetchProfiles = async () => {
   //   try {

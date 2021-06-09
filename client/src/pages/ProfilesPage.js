@@ -4,7 +4,7 @@ import { ProfilesList } from "../components/ProfilesList";
 import { useMessage } from "../hooks/message.hook";
 import { AuthContext } from "../States/Context/AuthContext";
 import { HttpContext } from "../States/Context/HttpContext";
-import { isAdminLookingForProfile, userIdFromURL } from "../Utils/Utils";
+import { userIdFromURLLL } from "../Utils/Utils";
 
 export const ProfilesPage = () => {
   const auth = useContext(AuthContext);
@@ -29,9 +29,9 @@ export const ProfilesPage = () => {
   //   return 0;
   // };
 
-  const fetchProfilesThen = () => {
-    if (isAdminLookingForProfile) {
-      request(`/api/profile/get/${userIdFromURL}`, "GET", null, {
+  const fetchProfiles = () => {
+    if (userIdFromURLLL) {
+      request(`/api/profile/get/${userIdFromURLLL()}`, "GET", null, {
         Authorization: `Bearer ${auth.token}`,
       })
         .then(setProfiles)
@@ -46,7 +46,7 @@ export const ProfilesPage = () => {
   };
 
   useEffect(() => {
-    fetchProfilesThen();
+    fetchProfiles();
   }, []);
 
   // const fetchProfiles = useCallback(async () => {

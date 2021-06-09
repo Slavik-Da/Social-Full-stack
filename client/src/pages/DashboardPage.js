@@ -17,6 +17,7 @@ export const DashboardPage = () => {
     clearError();
   }, [error, message, clearError]);
 
+
   const fetchDash = () => {
     request("/api/user/dashboard", "GET", null, {
       Authorization: `Bearer ${auth.token}`,
@@ -27,7 +28,7 @@ export const DashboardPage = () => {
 
   useEffect(() => {
     fetchDash();
-  });
+  }, []);
 
   // const fetchDash = useCallback(async () => {
   //   try {
