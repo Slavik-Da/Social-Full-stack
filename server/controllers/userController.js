@@ -24,7 +24,7 @@ class UserController {
       const candidate = await User.findOne({ where: { email } });
       console.log(candidate);
       if (candidate) {
-        // Email use?
+        // Email is in use?
         return next(ApiError.badRequest("User with this email already exists"));
       }
       const hashPassword = await bcrypt.hash(password, 5);
@@ -118,27 +118,23 @@ class UserController {
       if (password) {
         const hashPassword = await bcrypt.hash(password, 5);
         await User.findOne({ where: { id } }).then(async (result) => {
-          return res.json(
-            await result.update({
+          await result
+            .update({
               email,
               password: hashPassword,
               role,
             })
-          );
+            .then(res.json(`User with id: ${id} was changed. New password saved`));
         });
-        const token = generateJwt(user.id, user.email, user.role);
-        return res.json({ token });
       } else {
         await User.findOne({ where: { id } }).then(async (result) => {
-          return res.json(
-            await result.update({
+          await result
+            .update({
               email,
               role,
             })
-          );
+            .then(res.json(`User with id: ${id} was changed`));
         });
-        const token = generateJwt(user.id, user.email, user.role);
-        return res.json({ token });
       }
     } catch (e) {
       next(ApiError.badRequest(e.message));
