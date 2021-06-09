@@ -30,7 +30,7 @@ export const ProfilesPage = () => {
   // };
 
   const fetchProfiles = () => {
-    if (userIdFromURL) {
+    if (userIdFromURL()) {
       request(`/api/profile/get/${userIdFromURL()}`, "GET", null, {
         Authorization: `Bearer ${auth.token}`,
       })
